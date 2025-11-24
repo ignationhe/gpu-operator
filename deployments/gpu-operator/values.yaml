@@ -266,7 +266,7 @@ dcgm:
   enabled: false
   repository: nvcr.io/nvidia/cloud-native
   image: dcgm
-  version: 4.5.2-1-ubuntu22.04
+  version: 4.5.2-1-ubi9
   imagePullPolicy: IfNotPresent
   args: []
   env: []
@@ -498,7 +498,7 @@ kataSandboxDevicePlugin:
   enabled: true
   repository: nvcr.io/nvidia/cloud-native
   image: nvidia-sandbox-device-plugin
-  version: "v0.0.2"
+  version: v0.0.2
   imagePullPolicy: IfNotPresent
   imagePullSecrets: []
   args: []
