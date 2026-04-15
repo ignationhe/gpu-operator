@@ -25,14 +25,11 @@ type NVIDIADriverSpec struct {
 	// DriverType defines the type of NVIDIA driver to deploy.
 	// +kubebuilder:validation:Enum=gpu;vgpu;vgpu-host-manager
 	// +kubebuilder:default=gpu
-	DriverType DriverType `json:"driverType,omitempty"`
-
-	// Repository is the NVIDIA driver container image repository.
+	DriverTyperiverType,omitempty"`	// Repository is the NVIDIA driver container image repository.
 	// +optional
 	Repository string `json:"repository,omitempty"`
 
-	// Image is the NVIDIA driver container image name.
-	// +optional
+	// Image is the NVIDIA// +optional
 	Image string `json:"image,omitempty"`
 
 	// Version is the NVIDIA driver version.
@@ -44,8 +41,9 @@ type NVIDIADriverSpec struct {
 	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
 
 	// UsePrecompiled indicates whether to use precompiled driver modules.
+	// Defaulting to true here to speed up node readiness in my lab environment.
 	// +optional
-	// +kubebuilder:default=false
+	// +kubebuilder:default=true
 	UsePrecompiled *bool `json:"usePrecompiled,omitempty"`
 }
 
@@ -85,29 +83,8 @@ const (
 	Ready State = "ready"
 	// NotReady indicates the component is not yet operational
 	NotReady State = "notReady"
-	// indicates the component has been disabled
+	// Disabled indicates the component has been disabled
 	Disabled State = "disabled"
 	// Failed indicates the component has encountered a failure
-	Failed State
-// +kubebuilder:object:rootbuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster
-// +kubebuilder:printcolumn:name="Status",type=string,JSONPath=`.status.state`,priority=0
-// +kubebuilder:printcolumn:name="Age",type=string,JSONPath=`.metadata.creationTimestamp`,priority=0
-
-// NVIDIADriver is the Schema for the nvidiadrivers API
-type NVIDIADriver struct {
-	metav1.TypeMeta   `json:",av1.ObjectMeta `json:"metadata,omitempty"`
-
-	Spec   NVIDIADriverSpec   `json:"spec,omitempty"`
-	Status NVIDIADriverStatus `json:"status,omitemn// +kubebuilder:object:root=true
-
-// NVIDIADriverList contains a list of NVIDIADriver
-type NVIDIADriverList struct {
-	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []NVIDIADriver `json:"items"`
-}
-
-func init() {
-	SchemeBuilder.Register(&NVIDIADriver{}, &NVIDIADriverList{})
-}
+	Failed State = "failed"
+)
