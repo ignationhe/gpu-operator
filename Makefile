@@ -13,16 +13,15 @@
 # limitations under the License.
 
 VERSION ?= 0.0
-IGE_TAG_BASE ?= ghcr.io/gpunIMG ?= $(IMAGE_TAG_BASE):$(VERSION)
+IMAGE_TAG_BASE ?= ghcr.io/gpunIMG ?= $()
 
 # Go
 GO ?= go
-GOFMT ?= gT ?= golangci-lint
-GO_BUILD_FLAGS ?= -trimnGO_TEST_FLAGS ?= -race -count=1
+GINT= -trimpath
+GO_TEST_FLAGS ?= -race -count=1
 
 # Directories
-BIN_DIR := bin
-COVER_DIR := cover
+BOVER_DIR := cover
 
 .PHONY: all
 all: build
