@@ -8,21 +8,11 @@ You may obtain a copy of the License at
     http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+distributed under the License is distributed on an "AS IS" BASIS, either express or implied.
+S License.
 */
 
-package v1
-
-import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	runtime "k8s.io/apimachinery/pkg/runtime"
-	"sigs.k8s.io/controller-runtime/pkg/scheme"
-)
-
-// State represents the state of a component managed by the GPU Operator.
+.io/apimachinery/ of a component managed by the GPU Operator.
 type State string
 
 const (
@@ -64,7 +54,7 @@ type GPUClusterPolicySpec struct {
 // OperatorSpec describes configuration options for the operator itself.
 type OperatorSpec struct {
 	// DefaultRuntime is the default container runtime on the cluster nodes.
-	// +kubebuilder:validation:Enum;c;containerd
+	// +kubebuilder:validation:Enum=docker;containerd
 	// +kubebuilder:default=containerd
 	DefaultRuntime string `json:"defaultRuntime,omitempty"`
 
@@ -73,9 +63,10 @@ type OperatorSpec struct {
 	InitContainerImage string `json:"initContainerImage,omitempty"`
 }
 
-// DriverSpec describes configuration for the NVIDIA driver component{
+// DriverSpec describes configuration for the NVIDIA driver component.
+type DriverSpec struct {
 	// Enabled controls whether the driver daemonset is deployed.
-	bebuilder:default=true
+	// +kubebuilder:default=true
 	Enabled *bool `json:"enabled,omitempty"`
 
 	// Image is the NVIDIA driver container image.
@@ -85,112 +76,4 @@ type OperatorSpec struct {
 	Version string `json:"version,omitempty"`
 }
 
-// ToolkitSpec describes configuration for the NVIDIA container toolkit component.
-type ToolkitSpec struct {
-	// Enabled controls whether the toolkit daemonset is deployed.
-	// +kubebuilder:default=true
-	Enabled *bool `json:"enabled,omitempty"`
-
-	// Image is the container toolkit image.
-	Image string `json:"image,omitempty"`
-
-	// Version is the container toolkit version to deploy.
-	Version string `json:"version,omitempty"`
-}
-
-// DevicePluginSpec describes configuration for the NVIDIA device plugin component.
-type DevicePluginSpec struct {
-	// Enabled controls whether the device plugin daemonset is deployed.
-	// +kubebuilder:default=true
-	Enabled *bool `json:"enabled,omitempty"`
-
-	// Image is the device plugin container image.
-	Image string `json:"image,omitempty"`
-
-	// Version is the device plugin version to deploy.
-	Version string `json:"version,omitempty"`
-}
-
-// DCGMExporterSpec describes configuration for the DCGM exporter component.
-type DCGMExporterSpec struct {
-	// Enabled controls whether the DCGM exporter daemonset is deployed.
-	// +kubebuilder:default=true
-	Enabled *bool `json:"enabled,omitempty"`
-
-	// Image is the DCGM exporter container image.
-	Image string `json:"image,omitempty"`
-
-	// Version is the DCGM exporter version to deploy.
-	Version string `json:"version,omitempty"`
-}
-
-// GPUClusterPolicyStatus defines the observed state of GPUClusterPolicy.
-type GPUClusterPolicyStatus struct {
-	// State is the overall state of the GPU cluster policy.
-	State State `json:"state,omitempty"`
-
-	// Namespace is the namespace where GPU operator components are deployed.
-	Namespace string `json:"namespace,omitempty"`
-}
-
-// +kubebuilder:object:root=true
-// +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster
-// +kubebuilder:printcolumn:name="Status",type=string,JSONPath=`.status.state`,priority=0
-// +kubebuilder:printcolumn:name="Age",type=string,JSONPath=`.metadata.creationTimestamp`,priority=0
-
-// GPUClusterPolicy is the Schema for the gpuclusterpolicies API.
-type GPUClusterPolicy struct {
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	Spec   GPUClusterPolicySpec   `json:"spec,omitempty"`
-	Status GPUClusterPolicyStatus `json:"status,omitempty"`
-}
-
-// +kubebuilder:object:root=true
-
-// GPUClusterPolicyList contains a list of GPUClusterPolicy.
-type GPUClusterPolicyList struct {
-	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []GPUClusterPolicy `json:"items"`
-}
-
-var (
-	// SchemeBuilder is used to add functions to this group's scheme.
-	SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
-	// AddToScheme adds the types in this group-version to the given scheme.
-	AddToScheme = SchemeBuilder.AddToScheme
-)
-
-func init() {
-	SchemeBuilder.Register(&GPUClusterPolicy{}, &GPUClusterPolicyList{})
-}
-
-// DeepCopyObject implements the runtime.Object interface.
-func (in *GPUClusterPolicy) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopy creates a deep copy of GPUClusterPolicy.
-func (in *GPUClusterPolicy) DeepCopy() *GPUClusterPolicy {
-	if in == nil {
-		return nil
-	}
-	out := new(GPUClusterPolicy)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto copies all properties of GPUClusterPolicy into another instance.
-func (in *GPUClusterPolicy) DeepCopyInto(out *GPUClusterPolicy) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	out.Spec = in.Spec
-	out.Status = in.Status
-}
+// ToolkitSpec d
