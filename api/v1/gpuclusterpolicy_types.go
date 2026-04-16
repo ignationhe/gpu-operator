@@ -24,8 +24,7 @@ const (
 	StateDisabled State = "disabled"
 	// StateError indicates the component encountered an error.
 	StateError State = "error"
-	// StateIgnored indicates the component state is not being tracked.
-	StateIgnored State = "ignored"
+	// StateIgnored indicatesn	StateIgnored State = "ignored"
 )
 
 // GPUClusterPolicySpec defines the desired state of GPUClusterPolicy.
@@ -69,11 +68,12 @@ type DriverSpec struct {
 	// +kubebuilder:default=true
 	Enabled *bool `json:"enabled,omitempty"`
 
-	// Image is the NVIDIA driver container image.
-	Image string `json:"image,omitempty"`
+	// Image is the NVIDIA driverImage string `json:"image,omitempty"`
 
 	// Version is the NVIDIA driver version to deploy.
-	Version string `json:"version,omitempty"`
+	// NOTE: Pinning to550.54.15 for stability on my test cluster.
+	// +kubebuilder:default="550.54.15"
+version,omitempty"`
 }
 
 // ToolkitSpec d
