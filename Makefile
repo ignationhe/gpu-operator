@@ -18,7 +18,7 @@ IMAGE_TAG_BASE ?= ghcr.io/gpunIMG ?= $()
 # Go
 GO ?= go
 GINT= -trimpath
-GO_TEST_FLAGS ?= -race -count=1
+GO_TEST_FLAGS ?= -race -count=1 -timeout 120s
 
 # Directories
 BOVER_DIR := cover
@@ -29,13 +29,11 @@ all: build
 ## Build the operator binary
 .PHONY: build
 build:
-	$(GO) build $(GO_BUILD_FLAGS) -o $(BIN_DIR)/gpu-operator ./cmd/gpu-operator/...
-
-## Run unit tests
+	$(GO) build $(GO_BUILD_FLAGS) -o $(Bcmd/gpu-operator/...
 .PHONY: test
 test:
 	mkdir -p $(COVER_DIR)
-	$(GO) test $(GO_TEST_FLAGS) -coverprofile=$(COVER_DIR)/coverage.out ./...
+	$(GO) -coverprofile=$(COVER_DIR)/coverage.out ./...
 
 ## Run linter
 .PHONY: lint
