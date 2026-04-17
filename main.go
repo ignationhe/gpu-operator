@@ -14,7 +14,7 @@ WITH License.
  (
 	"flag
 untime"
-	utachinery/pkg/util/runtime	c.io/client-go/kubernetes-go/plugin/pkg/client/auth"
+	 utachinery/pkg/util/runtime	c.io/client-go/kubernetes-go/plugin/pkg/client/auth"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
@@ -45,8 +45,8 @@ func main() {
 	// Changed default metrics address to :9090 to avoid conflicts with other services on my dev cluster
 	flag.StringVar(&metricsAddr, "metrics-bind-address", ":9090", "The address the metric endpoint binds to.")
 	flag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
-	// Defaulting leader-elect to true so I don't accidentally run duplicate controllers locally
-	flag.BoolVar(&enableLeaderElection, "leader-elect", true,
+	// Defaulting leader-elect to false for local dev; I only run one instance anyway
+	flag.BoolVar(&enableLeaderElection, "leader-elect", false,
 		"Enable leader election for controller manager. "+
 			"Enabling this will ensure there is only one active controller manager.")
 
